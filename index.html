@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- English language -->
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- uses viewport to be responisve on mobile -->
+
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Epilogue&display=swap" rel="stylesheet">
+
+        <!-- all accessible libraries contained in the head -->
+
+            <title>Richards Project</title>
+	</head>
+<?php
+
+	$servername="localhost";
+	$username="root";
+	$password="";
+	$dbname="db1";
+	
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	// create connections
+	if($conn->connect_error){
+		die("Connection failed: " . $conn->connect_error);
+	}
+	
+	$sql = "SELECT id, fname, lname FROM user";
+	
+	$sql = "SELECT user.id, user.fname, user.lname, details.details_name
+	FROM user
+	JOIN details
+	ON user.id = details.user_id
+	WHERE details_name = 'details 2'
+	";
+	
+	$result = $conn->query($sql);
+	
+	if($result->num_rows > 0){
+		?>
+		<table class="table table-hover">
+	<?php while($row = $result->fetch_assoc()){ ?>
+			<tr class="bg-active bg-info text-white">
+				<th>Plan Type</th>
+				<th>Lead Generator</th>
+				<th>Company Name</th>
+			</tr>
+
+
+    <tbody>
+    <?php
+        echo '<tr> <td>' . $row["id"] .
+				'</td> <td>' . $row["fname"] . '</td>
+				<td>' . $row["details_name"] . '</td>  
+              </tr>';
+     ?>
+    </tbody>
+	<?php } ?>
+    </table>
+	<?php
+	}
+
+	else{
+		echo "0 results";
+	}
+	
+	$conn->close();
+	
+?>
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</html>
