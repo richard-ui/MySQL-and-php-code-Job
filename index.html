@@ -29,13 +29,17 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	
-	$sql = "SELECT id, fname, lname FROM user";
-	
-	$sql = "SELECT user.id, user.fname, user.lname, details.details_name
-	FROM user
-	JOIN details
-	ON user.id = details.user_id
-	WHERE details_name = 'details 2'
+	$sql = "SELECT plan.plan_type, plan.plan_lead_gen, company.company_name, plan_client.pc_first_name, plan_client.pc_last_name
+	FROM Company
+	JOIN Users
+	ON users.user_company = company.company_id
+    JOIN Plan
+    ON plan.plan_lead_gen = users.user_id
+    JOIN Plan_client
+    ON plan.plan_id = plan_client.pc_plan_id
+    JOIN Payment
+    ON plan.plan_id = payment.payment_plan
+    WHERE payment_status = "failed" AND Month("payment_due_date") = MONTH(now())
 	";
 	
 	$result = $conn->query($sql);
@@ -48,14 +52,16 @@
 				<th>Plan Type</th>
 				<th>Lead Generator</th>
 				<th>Company Name</th>
+                <th>Owner</th>
 			</tr>
 
 
     <tbody>
     <?php
-        echo '<tr> <td>' . $row["id"] .
-				'</td> <td>' . $row["fname"] . '</td>
-				<td>' . $row["details_name"] . '</td>  
+        echo '<tr> <td>' . $row["plan_type"] .
+				'</td> <td>' . $row["plan_lead_gen"] . '</td>
+				<td>' . $row["company_name"] . '</td>
+                <td>' . $row["pc_first_name"] . $row["pc_last_name"] . '</td>  
               </tr>';
      ?>
     </tbody>
