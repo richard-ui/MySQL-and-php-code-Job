@@ -31,5 +31,5 @@ Here I have documented how i have used PHP Code to construct a connection to for
 
 Here I selected the plan_type, plan_lead_generator, the company_name and the pc_firstname. I assumed the pc_plan_id from the PC Client table was a link to the plan table, therefore I linked them together and gathered the name of the clients who owned the insurance plan.
 
-- I have documented the answer in my index.file.
+- I have documented the answer in my index.html file.
 

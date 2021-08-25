@@ -46,6 +46,7 @@
 	
 	if($result->num_rows > 0){
 		?>
+		<div class="table-responsive">
 		<table class="table table-hover">
 	<?php while($row = $result->fetch_assoc()){ ?>
 			<tr class="bg-active bg-info text-white">
@@ -67,6 +68,7 @@
     </tbody>
 	<?php } ?>
     </table>
+</div>
 	<?php
 	}
 
